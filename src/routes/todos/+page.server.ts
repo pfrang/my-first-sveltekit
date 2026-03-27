@@ -27,5 +27,13 @@ export const actions = {
 		if (id) {
 			db.prepare('DELETE FROM todo WHERE id = ?').run(id);
 		}
+	},
+	edit: async ({ request }) => {
+		const formData = await request.formData();
+		const id = formData.get('id') as string;
+		const title = formData.get('title') as string;
+		if (id && title) {
+			db.prepare('UPDATE todo SET title = ? WHERE id = ?').run(title, id);
+		}
 	}
 } satisfies Actions;
