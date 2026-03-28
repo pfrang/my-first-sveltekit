@@ -5,6 +5,7 @@ import type { Todo } from '$lib/types/todo';
 export const load: PageServerLoad = async () => {
 	try {
 		const todos = db.prepare('SELECT * FROM todo').all() as Todo[];
+		await new Promise((resolve) => setTimeout(resolve, 5000)); // Simulate delay
 		return {
 			todos
 		};
