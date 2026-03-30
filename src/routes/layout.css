@@ -1,1 +1,137 @@
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Orbitron:wght@400;700;900&display=swap');
+
+:root {
+	--g: #00ff41;
+	--g-dim: rgba(0, 255, 65, 0.45);
+	--g-glow: rgba(0, 255, 65, 0.22);
+	--g-border: rgba(0, 255, 65, 0.32);
+	--amber: #ffaa00;
+	--blue: #00d4ff;
+	--red: #ff2255;
+	--space: #000810;
+	--panel: rgba(0, 14, 5, 0.91);
+	--ft: 'VT323', monospace;
+	--fh: 'Orbitron', monospace;
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	height: 100%;
+	background: var(--space);
+}
+
+body {
+	min-height: 100%;
+	color: var(--g);
+	font-family: var(--ft);
+	font-size: 20px;
+	line-height: 1.4;
+	background: transparent;
+}
+
+/* Scanline overlay — fixed so it covers everything including backgrounds */
+body::after {
+	content: '';
+	position: fixed;
+	inset: 0;
+	background: repeating-linear-gradient(
+		0deg,
+		rgba(0, 0, 0, 0) 0px,
+		rgba(0, 0, 0, 0) 2px,
+		rgba(0, 0, 0, 0.09) 2px,
+		rgba(0, 0, 0, 0.09) 4px
+	);
+	pointer-events: none;
+	z-index: 9000;
+}
+
+/* CRT edge vignette */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.72) 100%);
+	pointer-events: none;
+	z-index: 8999;
+}
+
+@keyframes blink {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+}
+
+@keyframes blink-soft {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.3;
+	}
+}
+
+@keyframes flicker {
+	0%,
+	93%,
+	95%,
+	100% {
+		opacity: 1;
+	}
+	94% {
+		opacity: 0.7;
+	}
+}
+
+@keyframes glow-pulse {
+	0%,
+	100% {
+		text-shadow: 0 0 8px var(--g-glow);
+	}
+	50% {
+		text-shadow: 0 0 20px rgba(0, 255, 65, 0.6), 0 0 40px rgba(0, 255, 65, 0.2);
+	}
+}
+
+@keyframes scan-sweep {
+	0% {
+		transform: translateY(-100%);
+		opacity: 0.6;
+	}
+	100% {
+		transform: translateY(100vh);
+		opacity: 0.6;
+	}
+}
+
+@keyframes progress-fill {
+	0% {
+		width: 0%;
+	}
+	100% {
+		width: 100%;
+	}
+}
+
+.blink {
+	animation: blink 1s step-end infinite;
+}
+.blink-soft {
+	animation: blink-soft 2s ease-in-out infinite;
+}
+.flicker {
+	animation: flicker 7s ease-in-out infinite;
+}
+.glow-pulse {
+	animation: glow-pulse 3s ease-in-out infinite;
+}
